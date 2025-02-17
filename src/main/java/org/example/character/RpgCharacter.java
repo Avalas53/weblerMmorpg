@@ -11,58 +11,64 @@ public class RpgCharacter {
         this.currentWeapon = weapon;
     }
 
-    private void attack(RpgCharacter enemy) {
+    public void attack(RpgCharacter enemy) {
+        takeDamage(calculateReflectionDamage(enemy));
+        enemy.takeDamage(calculateAttackDamage());
+    }
+
+    private Integer calculateAttackDamage() {
         switch (currentWeapon) {
             case HAND -> {
-                enemy.health -= (attackPoints / 100);
+                return attackPoints / 100;
             }
             case BOW -> {
-                enemy.health -= (attackPoints / 20);
+                return attackPoints / 20;
             }
             case SWORD -> {
-                enemy.health -= (attackPoints / 10);
+                return attackPoints / 10;
             }
             case AXE -> {
-                enemy.health -= (attackPoints / 5);
+                return attackPoints / 5;
             }
         }
+        throw new RuntimeException("attack message");
     }
 
-    private void thornDamage(RpgCharacter enemy) {
-        if (enemy.currentWeapon.equals(Weapon.SWORD)) {
-            switch (currentWeapon) {
-                case HAND -> {
-                    this.takeDamage(enemy.defensePoints / 2);
-                }
-                case BOW -> {
-                    this.takeDamage(0);
-                }
-                case SWORD -> {
-                    this.takeDamage(enemy.defensePoints / 20);
-                }
-                case AXE -> {
-                    this.takeDamage(enemy.defensePoints / 10);
-                }
+    private Integer calculateDefenseDamage() {
+        switch (currentWeapon) {
+            case HAND -> {
+                return defensePoints / 100;
             }
-        } else {
-            switch (currentWeapon) {
-                case HAND -> {
-                    takeDamage(enemy.defensePoints);
-                }
-                case BOW -> {
-                    takeDamage(0);
-                }
-                case SWORD -> {
-                    takeDamage(enemy.defensePoints / 10);
-                }
-                case AXE -> {
-                    takeDamage(enemy.defensePoints / 5);
-                }
+            case BOW -> {
+                return defensePoints / 20;
+            }
+            case SWORD -> {
+                return defensePoints / 10;
+            }
+            case AXE -> {
+                return defensePoints / 5;
             }
         }
+        throw new RuntimeException("defense message");
     }
 
-    protected void takeDamage (Integer damage) {
+    private Integer calculateReflectionDamage(RpgCharacter enemy){
+        Integer damage = enemy.calculateDefenseDamage();
+        switch (currentWeapon) {
+            case HAND, AXE -> {
+                return damage;
+            }
+            case BOW -> {
+                return 0;
+            }
+            case SWORD -> {
+                return damage / 2;
+            }
+        }
+        throw new RuntimeException("message");
+    }
+
+    protected void takeDamage(Integer damage) {
         health -= damage;
     }
 }
