@@ -26,8 +26,6 @@ public class RpgCharacter {
                 enemy.health -= (attackPoints / 5);
             }
         }
-        //enemy.takeDamage(calculateEnemyDamage());
-        //this.takeDamage(calculateOwnDamage());
     }
 
     private void thornDamage(RpgCharacter enemy) {
