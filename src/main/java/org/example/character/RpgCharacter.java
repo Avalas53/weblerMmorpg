@@ -11,7 +11,7 @@ public class RpgCharacter {
         this.currentWeapon = weapon;
     }
 
-    public void attack(RpgCharacter enemy) {
+    private void attack(RpgCharacter enemy) {
         switch (currentWeapon) {
             case HAND -> {
                 enemy.health -= (attackPoints / 100);
@@ -28,6 +28,40 @@ public class RpgCharacter {
         }
         //enemy.takeDamage(calculateEnemyDamage());
         //this.takeDamage(calculateOwnDamage());
+    }
+
+    private void thornDamage(RpgCharacter enemy) {
+        if (enemy.currentWeapon.equals(Weapon.SWORD)) {
+            switch (currentWeapon) {
+                case HAND -> {
+                    this.takeDamage(enemy.defensePoints / 2);
+                }
+                case BOW -> {
+                    this.takeDamage(0);
+                }
+                case SWORD -> {
+                    this.takeDamage(enemy.defensePoints / 20);
+                }
+                case AXE -> {
+                    this.takeDamage(enemy.defensePoints / 10);
+                }
+            }
+        } else {
+            switch (currentWeapon) {
+                case HAND -> {
+                    this.takeDamage(enemy.defensePoints);
+                }
+                case BOW -> {
+                    this.takeDamage(0);
+                }
+                case SWORD -> {
+                    this.takeDamage(enemy.defensePoints / 10);
+                }
+                case AXE -> {
+                    this.takeDamage(enemy.defensePoints / 5);
+                }
+            }
+        }
     }
 
     protected void takeDamage (Integer damage) {
