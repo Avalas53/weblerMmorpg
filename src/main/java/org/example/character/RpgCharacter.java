@@ -47,16 +47,16 @@ public class RpgCharacter {
         } else {
             switch (currentWeapon) {
                 case HAND -> {
-                    this.takeDamage(enemy.defensePoints);
+                    takeDamage(enemy.defensePoints);
                 }
                 case BOW -> {
-                    this.takeDamage(0);
+                    takeDamage(0);
                 }
                 case SWORD -> {
-                    this.takeDamage(enemy.defensePoints / 10);
+                    takeDamage(enemy.defensePoints / 10);
                 }
                 case AXE -> {
-                    this.takeDamage(enemy.defensePoints / 5);
+                    takeDamage(enemy.defensePoints / 5);
                 }
             }
         }
